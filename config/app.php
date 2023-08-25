@@ -185,4 +185,16 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | TWILIO ACCESS
+    |--------------------------------------------------------------------------
+    |
+    | Para configurar los token de twilio
+    |
+    */
+    'twilio_sid' => env('TWILIO_SID', 'DEFAULT'),
+    'twilio_auth_token' => env('TWILIO_AUTH_TOKEN', 'DEFAULT'),
+    'twilio_phone_number' => env('TWILIO_PHONE_NUMBER', 'DEFAULT'),
+
 ];

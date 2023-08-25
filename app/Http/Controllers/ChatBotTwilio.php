@@ -42,13 +42,33 @@ class ChatBotTwilio extends Controller
      * @param string $message Body of sms
      * @param string $recipient Number of recipient
      */
-    public function sendWhatsAppMessage(string $message, string $recipient)
+    public function sendWhatsAppMessage(Request $request)
     {
-        $twilio_whatsapp_number = getenv('TWILIO_WHATSAPP_NUMBER');
-        $account_sid = getenv("TWILIO_SID");
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_sid = config('app.twilio_sid');
+        $twilio_token = config('app.twilio_auth_token');
+        $twilio_phone_number = config('app.twilio_phone_number');
 
-        $client = new Client($account_sid, $auth_token);
-        return $client->messages->create($recipient, array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
+        // echo 'twilio_sid -> '. $twilio_sid . '\n';
+        // echo 'twilio_sid -> '.$twilio_token;
+        // echo 'twilio_phone_number -> '.$twilio_phone_number;
+
+        $client = new Client($twilio_sid, $twilio_token);
+
+        // +593995819939
+        // +593986089903
+
+        $to = $request->input('to');
+        // echo 'to ->'.$to. '\n';
+        $message = $request->input('message'); 
+
+        $client->messages->create(
+            $to,
+            [
+                'from' => $twilio_phone_number,
+                'body' => $message,
+            ]
+        );
+
+        return response()->json(['message' => 'SMS enviado']);
     }
 }
