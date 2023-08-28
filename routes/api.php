@@ -24,5 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/chat-bot', [ChatBotTwilio::class, 'listenToReplies']);
+Route::post('/chat-bot', [ChatBotTwilio::class, 'handleWebhook']);
 Route::post('/chat-send', [ChatBotTwilio::class, 'sendWhatsAppMessage']);
