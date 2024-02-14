@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatBotTwilio;
+use App\Http\Controllers\ChatBotTelegram;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/chat-bot', [ChatBotTwilio::class, 'handleWebhook']);
 Route::post('/chat-send', [ChatBotTwilio::class, 'sendWhatsAppMessage']);
+
+Route::post('/action', function(Request $request) {
+  $request->telegramWebAppUser('id'); // ID of telegram user
+})->middleware('telebot-webapp');
+
+Route::post('/webhook/telegram', [ChatBotTelegram::class,'handle']);
+Route::get('/index-telegram', [ChatBotTelegram::class, 'index']);
+Route::post('/send-telegram', [ChatBotTelegram::class, 'sendMessage']);

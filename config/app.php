@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        WeStacks\TeleBot\Laravel\Providers\TeleBotServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -183,6 +183,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'TeleBot' => WeStacks\TeleBot\Laravel\TeleBot::class,
     ])->toArray(),
 
     /*
@@ -196,5 +197,8 @@ return [
     'twilio_sid' => env('TWILIO_SID', 'DEFAULT'),
     'twilio_auth_token' => env('TWILIO_AUTH_TOKEN', 'DEFAULT'),
     'twilio_phone_number' => env('TWILIO_PHONE_NUMBER', 'DEFAULT'),
+
+    'telegram_token' => env('TELEGRAM_BOT_TOKEN', 'DEFAULT'),
+    'telegram_name' => env('TELEGRAM_BOT_NAME', 'DEFAULT'),
 
 ];
