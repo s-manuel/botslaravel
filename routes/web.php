@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatBotTelegram;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/telebot/webhook/bot/{token}', [ChatBotTelegram::class, 'handle']);
+Route::post('/webhook/telegram', [ChatBotTelegram::class, 'handle']);
+Route::get('/index-telegram', [ChatBotTelegram::class, 'index']);
+Route::post('/send-telegram', [ChatBotTelegram::class, 'sendMessage']);

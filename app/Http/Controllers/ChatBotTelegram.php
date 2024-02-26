@@ -11,19 +11,21 @@ class ChatBotTelegram extends Controller
 {
 
     /**
-     * Maneja el webhook para los mensajes de WhatsApp.
+     * Maneja las actualizaciones del webhook de Telegram.
      *
      * @param  Request  $request
+     * @param  string  $token
      * @return \Illuminate\Http\Response
      */
     public function handle(Request $request)
     {
-        # Procesar la actualización del webhook de Telegram aquí
-        $update = $request->all(); # Obtener la actualización de Telegram
+        Log::info('TelegramApi.');
+        $message = TeleBot::sendMessage([
+            'chat_id' => '1390360169', // ID del chat al que quieres enviar el mensaje
+            'text' => 'Este es un mensaje de prueba desde Laravel.',
+        ]);
 
-        Log::info('TelegramApi update');
-         
-        return response()->json(['status' => 'ok']);
+        return response()->json($message);
     }
 
     /**
@@ -35,8 +37,11 @@ class ChatBotTelegram extends Controller
     public function index(Request $request)
     {
         $telegramApi = TeleBot::getMe();
-        // dd($telegramApi);
-        Log::info('TelegramApi.', $telegramApi);
+
+        // $setWebhook = TeleBot::setWebhook(['url' => 'https://bots.manuelguangasig.com/webhook/telegram/'.config('telebot.token')]);
+        
+        dd($telegramApi);
+        Log::info('TelegramApi.'. print_r($telegramApi));
          
         return response($telegramApi)->header('Content-Type', 'application/xml');
     }
@@ -62,5 +67,12 @@ class ChatBotTelegram extends Controller
             // Manejar cualquier otra excepción
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function configurarWebhook()  {
+        
+        $bot = new TeleBot(['token' => config('telebot.token')]);
+        
+        $bot->setWebhook(['url' => 'https://https://bots.manuelguangasig.com/webhook/telegram/'.config('telebot.token')]);
     }
 }
